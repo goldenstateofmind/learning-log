@@ -1,0 +1,50 @@
+[
+  {
+    "action": {
+      "term": "action",
+      "definition": [
+        "An **action** is a plain object that represents an intention to change the state. Actions are the only way to get data into the store. Stored data (from UI events, network callbacks, WebSockets, etc) needs to eventually be dispatched as actions.",
+        "Actions must have a `type` field. (The types can be defined as constants and imported from another module.",
+        "``` ¶ javascript const SET_THING_TYPE = \"SET_THING\" ¶ const setThingAction = {type: SET_THING_TYPE, payload: {}} ¶"
+      ]
+    }
+  },
+  { "action creator": { "term": "action creator", "definition": [""] } },
+  { "component": { "term": "component", "definition": [""] } },
+  {
+    "component, class component": {
+      "term": "component, class component",
+      "definition": [""]
+    }
+  },
+  {
+    "component, controlled component": {
+      "term": "component, controlled component",
+      "definition": [""]
+    }
+  },
+  {
+    "component, function component": {
+      "term": "component, function component",
+      "definition": [""]
+    }
+  },
+  {
+    "component, pure component": {
+      "term": "component, pure component",
+      "definition": [""]
+    }
+  },
+  {
+    "component, uncontrolled component": {
+      "term": "component, uncontrolled component",
+      "definition": [""]
+    }
+  },
+  { "dispatch": { "term": "dispatch", "definition": [""] } },
+  { "react": { "term": "react", "definition": [""] } },
+  { "redux": { "term": "redux", "definition": [""] } },
+  { "state": { "term": "state", "definition": [""] } },
+  { "store": { "term": "store", "definition": [""] } },
+  { "thunk": { "term": "thunk", "definition": [""] } }
+]
