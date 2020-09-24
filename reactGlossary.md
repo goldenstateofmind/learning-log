@@ -2,24 +2,26 @@
 1. [action](#action)
 1. [action creator](#action-creator)
 1. [component](#component)
-1. [component, class component](#component-class-component)
+1. [component, class vs function](#component-class-vs-function)
 1. [component, controlled vs uncontrolled](#component-controlled-vs-uncontrolled)
-1. [component, function component (presentation component?)](#component-function-component-presentation-component)
-1. [component, pure component](#component, pure component)
-1. [dispatch function](#dispatch-function)
-1. [hook](#hook)
-1. [`useEffect`](#useEffect)
-1. [`useRef`](#useRef)
-1. [`useState`](#useState)
-1. [`props`](#props)
-1. [Prop Drilling](#Prop-Drilling)
-1. [Provider](#Provider)
-1. [react](#react)
-1. [reducer](#reducer)
-1. [redux](#redux)
-1. [state](#state)
-1. [store](#store)
-1. [thunk](#thunk)
+2. [component, stateless (presentation) vs stateful (container)](#component-function-component-presentation-component)
+4. [`constructor() { super() }`](#constructor-super)
+5. [dispatch function](#dispatch-function)
+6. [hook](#hook)
+   1. [`useEffect`](#useEffect)
+   2. [`useRef`](#useRef)
+   3. [`useState`](#useState)
+7. [`props`](#props)
+8. [Prop Drilling](#Prop-Drilling)
+9. [Provider](#Provider)
+10. [react](#react)
+11. [react dom](#react-dom)
+12. [react router](#react-router)
+13. [reducer](#reducer)
+14. [redux](#redux)
+15. [state](#state)
+16. [store](#store)
+17. [thunk](#thunk)
 
 
 
@@ -59,60 +61,23 @@ A function that returns an action
 const setThingAC = (info) => ({type: SET_THING_TYPE, payload: info})
 ```
 
+
+1. [component](#component)
+1. [component, class vs function](#component-class-vs-function)
+1. [component, controlled vs uncontrolled](#component-controlled-vs-uncontrolled)
+2. [component, stateless (presentation) vs stateful (container)](#component-function-component-presentation-component)
+4. [`constructor() { super() }`](#constructor-super)
+
+
 ## component
 
 ```javascript
 ```
 
 
-## component, class component
+## component, class vs function
 
 (When) do you need a class component (vs function component)?
-
-```javascript
-import React, { Component } from 'react'
-// import ...
-
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <ComponentA />
-        <ComponentB />
-      </div>
-    )
-  }
-}
-export default App
-```
-
-## component, controlled vs uncontrolled
-
-A [Controlled Component](https://reactjs.org/docs/forms.html#controlled-components) is one that takes its current value through props and notifies changes through callbacks like onChange. A parent component "controls" it by handling the callback and managing its own state and passing the new values as props to the controlled component. You could also call this a "dumb component".
-
-An [Uncontrolled Component](https://reactjs.org/docs/uncontrolled-components.html) is one that stores its own state internally, and you query the DOM using a ref to find its current value when you need it. This is a bit more like traditional HTML.
-
-
-```jsx
-// Controlled:
-<input type="text" value={value} onChange={handleChange} />
-
-const controlledComponent = () => {
-  const [foo, setFoo] = useState('foo')
-
-  const handleChange = (e) => setFoo(e.target.value)
-
-  return (<input type="text" value={foo} onChange={handleChange} />)
-}
-
-// Uncontrolled:
-<input type="text" defaultValue="foo" ref={inputRef} />
-// Use `inputRef.current.value` to read the current value of <input>
-```
-
-In most (or all) cases [you should use controlled components](https://goshakkk.name/controlled-vs-uncontrolled-inputs-react/#conclusion).
-
-## component, function component (presentation component?)
 
 A component written as a function instead of a class. Prior to React 16.8 these just accepted arguments as properties and rendered simple HTML - they did not have their own state. When using "[hooks](#hook)" 
 
@@ -147,9 +112,55 @@ const App = () => {
 export default App
 ```
 
+## component, controlled vs uncontrolled
+
+A [Controlled Component](https://reactjs.org/docs/forms.html#controlled-components) is one that takes its current value through props and notifies changes through callbacks like onChange. A parent component "controls" it by handling the callback and managing its own state and passing the new values as props to the controlled component. You could also call this a "dumb component".
+
+An [Uncontrolled Component](https://reactjs.org/docs/uncontrolled-components.html) is one that stores its own state internally, and you query the DOM using a ref to find its current value when you need it. This is a bit more like traditional HTML.
+
+
+```jsx
+// Controlled:
+import React, { useState } from 'react'
+
+const controlledComponent = () => {
+  const [foo, setFoo] = useState('foo')
+
+  const handleChange = (e) => setFoo(e.target.value)
+
+  return (<input type="text" value={foo} onChange={handleChange} />)
+}
+
+// Uncontrolled:
+<input type="text" defaultValue="foo" ref={inputRef} />
+// Use `inputRef.current.value` to read the current value of <input>
+```
+
+In most (or all) cases [you should use controlled components](https://goshakkk.name/controlled-vs-uncontrolled-inputs-react/#conclusion).
+
+## component, stateless (presentation) vs stateful (container)
+
+Stateless components render only according to `props`
+
+```jsx
+
+```
+
 ## component, pure component
 
 ```javascript
+```
+
+## `constructor() { super() }`
+
+```jsx
+class MyComponent extends Component {
+  constructor() {
+    super()
+    this.state = {
+      foos: []
+    }
+  }
 ```
 
 
