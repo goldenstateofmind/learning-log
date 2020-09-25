@@ -138,9 +138,33 @@ const controlledComponent = () => {
 
 In most (or all) cases [you should use controlled components](https://goshakkk.name/controlled-vs-uncontrolled-inputs-react/#conclusion).
 
-## component, stateless (presentation) vs stateful (container)
+## component, stateless (presentation) (pure?) vs stateful (container)
+
+cf: [https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0](https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0)
 
 Stateless components render only according to `props`
+
+
+### Presentational components:
+* Are concerned with how things look.
+* May contain both presentational and container components** inside, and usually have some DOM markup and styles of their own.
+* Often allow containment via this.props.children.
+* Have no dependencies on the rest of the app, such as Flux actions or stores.
+* Don’t specify how the data is loaded or mutated.
+* Receive data and callbacks exclusively via props.
+* Rarely have their own state (when they do, it’s UI state rather than data).
+* Are written as functional components unless they need state, lifecycle hooks, or performance optimizations.
+* Examples: Page, Sidebar, Story, UserInfo, List.
+
+### Container components:
+* Are concerned with how things work.
+* May contain both presentational and container components** inside but usually don’t have any DOM markup of their own except for some wrapping divs, and never have any styles.
+* Provide the data and behavior to presentational or other container components.
+* Call Flux actions and provide these as callbacks to the presentational components.
+* Are often stateful, as they tend to serve as data sources.
+* Are usually generated using higher order components such as connect() from React Redux, createContainer() from Relay, or Container.create() from Flux Utils, rather than written by hand.
+* Examples: UserPage, FollowersSidebar, StoryContainer, FollowedUserList.
+
 
 ```jsx
 
@@ -153,16 +177,62 @@ Stateless components render only according to `props`
 
 ## `constructor() { super() }`
 
+cf: [https://overreacted.io/why-do-we-write-super-props/](https://overreacted.io/why-do-we-write-super-props/)
+
+
+The `constructor` method is a special method for creating and initializing an object created with a class. It allows you to provide any custom initialization that must be done before any other methods can be called on an instantiated object.
+
+Colloquially, you use `constructor` to set properties/constants/variables for the class, since [classes can only contain methods](https://stackoverflow.com/questions/22528967/es6-class-variable-alternatives).
+
 ```jsx
-class MyComponent extends Component {
-  constructor() {
-    super()
-    this.state = {
-      foos: []
-    }
+class Rectangle {
+  constructor(height, width) {
+    this.height = height;
+    this.width = width;
   }
+
+  render() {
+    return (
+      <div>My area is {this.height * this.width}</div>
+    )
+  }
+}
 ```
 
+If your class `extends` another class, and if you want it to inherit its parent's props, you can use `super`:
+
+```jsx
+class Polygon {
+    constructor() {
+        this.name = "Polygon";
+    }
+}
+
+class Square extends Polygon {
+    constructor() {
+        super();
+    }
+}
+
+let newInstance = new Square();
+console.log(newInstance.name); //Polygon
+```
+
+Dan Abramov explains ([https://overreacted.io/why-do-we-write-super-props/](https://overreacted.io/why-do-we-write-super-props/))
+
+"Importantly, you can’t use this in a constructor until after you’ve called the parent constructor. JavaScript won’t let you:"
+
+```jsx
+class Checkbox extends React.Component {
+  constructor(props) {
+    // 🔴 Can’t use `this` yet
+    super(props);
+    // ✅ Now it’s okay though
+    this.state = { isOn: true };
+  }
+  // ...
+}
+```
 
 ## dispatch function
 _redux_
